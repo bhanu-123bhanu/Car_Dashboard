@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Car Dashboard</title>
+<link rel="stylesheet" href="styles.css">
+<!-- Leaflet CSS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+</head>
+<body>
+
+<div class="dashboard">
+  <div class="top-bar">
+    <div style="display:flex;align-items:center;gap:4px;"><div class="arrow-left"></div><div style="display:flex;align-items:center;gap:4px;"><div class="top-bar-ticks"><div class="tick"></div><div class="tick"></div><div class="tick"></div></div><div class="arrow-right"></div></div></div>
+    <button id="btnLocation" class="location-btn" title="Toggle Map">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+        <circle cx="12" cy="10" r="3"/>
+      </svg>
+    </button>
+    <div style="display:flex;align-items:center;gap:4px;"><div class="top-bar-ticks"><div class="tick"></div><div class="tick"></div><div class="tick"></div></div><div class="arrow-right"></div></div>
+  </div>
+  <div class="sep-line sep-left"></div>
+  <div class="sep-line sep-right"></div>
+
+  <!-- LEFT SPEEDOMETER -->
+  <div class="speedo-wrap">
+    <svg class="speedo-svg" viewBox="0 0 290 290" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="bgGrad" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#0a1530"/><stop offset="100%" stop-color="#050a18"/></radialGradient>
+        <radialGradient id="innerGlow" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#2040a0" stop-opacity="0.8"/><stop offset="60%" stop-color="#0a1040" stop-opacity="0.6"/><stop offset="100%" stop-color="#000820" stop-opacity="0.9"/></radialGradient>
+        <filter id="glow1"><feGaussianBlur stdDeviation="3" result="coloredBlur"/><feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        <linearGradient id="needleGrad" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#0af"/><stop offset="100%" stop-color="#024"/></linearGradient>
+      </defs>
+      <circle cx="145" cy="145" r="140" fill="url(#bgGrad)" stroke="#0a1830" stroke-width="2"/>
+      <circle cx="145" cy="145" r="138" fill="none" stroke="#0af" stroke-width="3" stroke-opacity="0.9" stroke-dasharray="780 80" stroke-dashoffset="100" filter="url(#glow1)"/>
+      <circle cx="145" cy="145" r="130" fill="none" stroke="#0a2040" stroke-width="1"/>
+      <g transform="rotate(-135 145 145)">
+        <line x1="145" y1="18" x2="145" y2="35" stroke="#fff" stroke-width="2.5" transform="rotate(0 145 145)"/>
+        <line x1="145" y1="18" x2="145" y2="32" stroke="#fff" stroke-width="2" transform="rotate(27 145 145)"/>
+        <line x1="145" y1="18" x2="145" y2="35" stroke="#fff" stroke-width="2.5" transform="rotate(54 145 145)"/>
+        <line x1="145" y1="18" x2="145" y2="35" stroke="#fff" stroke-width="2.5" transform="rotate(81 145 145)"/>
+        <line x1="145" y1="18" x2="145" y2="35" stroke="#fff" stroke-width="2.5" transform="rotate(108 145 145)"/>
+        <line x1="145" y1="18" x2="145" y2="35" stroke="#e33" stroke-width="3" transform="rotate(135 145 145)"/>
+        <line x1="145" y1="18" x2="145" y2="32" stroke="#fff" stroke-width="2" transform="rotate(162 145 145)"/>
+        <line x1="145" y1="18" x2="145" y2="35" stroke="#fff" stroke-width="2.5" transform="rotate(189 145 145)"/>
+        <line x1="145" y1="18" x2="145" y2="35" stroke="#fff" stroke-width="2.5" transform="rotate(216 145 145)"/>
+        <line x1="145" y1="18" x2="145" y2="35" stroke="#fff" stroke-width="2.5" transform="rotate(243 145 145)"/>
+        <line x1="145" y1="18" x2="145" y2="32" stroke="#fff" stroke-width="2" transform="rotate(270 145 145)"/>
+      </g>
+      <g transform="rotate(-135 145 145)" opacity="0.5">
+        <line x1="145" y1="18" x2="145" y2="26" stroke="#568" stroke-width="1" transform="rotate(13.5 145 145)"/>
+        <line x1="145" y1="18" x2="145" y2="26" stroke="#568" stroke-width="1" transform="rotate(40.5 145 145)"/>
+        <line x1="145" y1="18" x2="145" y2="26" stroke="#568" stroke-width="1" transform="rotate(67.5 145 145)"/>
+        <line x1="145" y1="18" x2="145" y2="26" stroke="#568" stroke-width="1" transform="rotate(94.5 145 145)"/>
+        <line x1="145" y1="18" x2="145" y2="26" stroke="#568" stroke-width="1" transform="rotate(121.5 145 145)"/>
+        <line x1="145" y1="18" x2="145" y2="26" stroke="#568" stroke-width="1" transform="rotate(148.5 145 145)"/>
+        <line x1="145" y1="18" x2="145" y2="26" stroke="#568" stroke-width="1" transform="rotate(175.5 145 145)"/>
+        <line x1="145" y1="18" x2="145" y2="26" stroke="#568" stroke-width="1" transform="rotate(202.5 145 145)"/>
+        <line x1="145" y1="18" x2="145" y2="26" stroke="#568" stroke-width="1" transform="rotate(229.5 145 145)"/>
+        <line x1="145" y1="18" x2="145" y2="26" stroke="#568" stroke-width="1" transform="rotate(256.5 145 145)"/>
+      </g>
+      <text x="50" y="218" fill="#cde" font-size="13" font-family="Orbitron" font-weight="600" text-anchor="middle">0</text>
+      <text x="30" y="170" fill="#cde" font-size="13" font-family="Orbitron" font-weight="600" text-anchor="middle">20</text>
+      <text x="28" y="110" fill="#cde" font-size="13" font-family="Orbitron" font-weight="600" text-anchor="middle">40</text>
+      <text x="52" y="58" fill="#cde" font-size="13" font-family="Orbitron" font-weight="600" text-anchor="middle">60</text>
+      <text x="100" y="26" fill="#cde" font-size="13" font-family="Orbitron" font-weight="600" text-anchor="middle">80</text>
+      <text x="148" y="18" fill="#e44" font-size="13" font-family="Orbitron" font-weight="700" text-anchor="middle">100</text>
+      <text x="196" y="26" fill="#cde" font-size="13" font-family="Orbitron" font-weight="600" text-anchor="middle">140</text>
+      <text x="238" y="58" fill="#cde" font-size="13" font-family="Orbitron" font-weight="600" text-anchor="middle">180</text>
+      <text x="262" y="110" fill="#cde" font-size="13" font-family="Orbitron" font-weight="600" text-anchor="middle">200</text>
+      <circle cx="145" cy="145" r="90" fill="url(#innerGlow)"/>
+      <circle cx="145" cy="145" r="90" fill="none" stroke="#0a2060" stroke-width="2"/>
+      <circle cx="145" cy="145" r="88" fill="none" stroke="#1a4080" stroke-width="1" opacity="0.5"/>
+      <path d="M 148 18 A 127 127 0 0 1 220 35" fill="none" stroke="#e33" stroke-width="4" opacity="0.7"/>
+      <g class="needle" id="speedNeedle" transform="rotate(129 145 145)">
+        <line x1="145" y1="50" x2="145" y2="165" stroke="url(#needleGrad)" stroke-width="3" stroke-linecap="round"/>
+        <circle cx="145" cy="145" r="7" fill="#0af" filter="url(#glow1)"/>
+      </g>
+      <circle cx="145" cy="145" r="4" fill="#fff"/>
+      <text x="145" y="215" fill="#567" font-size="9" font-family="Rajdhani" font-weight="600" text-anchor="middle" letter-spacing="2">MPH</text>
+      <text x="145" y="228" fill="#456" font-size="8" font-family="Rajdhani" font-weight="500" text-anchor="middle" letter-spacing="2">km/h</text>
+    </svg>
+    <div class="speedo-center"><div class="speedo-value" id="speedVal">95</div></div>
+    <div class="bottom-left-icons">
+      <svg width="32" height="22" viewBox="0 0 32 22"><circle cx="8" cy="11" r="6" fill="none" stroke="#1af" stroke-width="1.5"/><line x1="14" y1="7" x2="28" y2="5" stroke="#1af" stroke-width="1.5" stroke-linecap="round"/><line x1="14" y1="11" x2="30" y2="11" stroke="#1af" stroke-width="1.5" stroke-linecap="round"/><line x1="14" y1="15" x2="28" y2="17" stroke="#1af" stroke-width="1.5" stroke-linecap="round"/></svg>
+      <div class="icon-abs">ABS</div>
+    </div>
+  </div>
+
+  <!-- CENTER PANEL -->
+  <div class="center-panel">
+    <div class="warning-icons">
+      <svg width="24" height="22" viewBox="0 0 24 22" fill="#e84"><path d="M8 18V8l4-6 4 6v10H8z" fill="none" stroke="#e84" stroke-width="1.5"/><path d="M10 18v-4h4v4" fill="#e84"/><path d="M16 8c2 0 4 1 4 3s-2 3-4 3" fill="none" stroke="#e84" stroke-width="1.5"/><rect x="2" y="16" width="4" height="4" rx="1" fill="#e84"/><line x1="4" y1="16" x2="4" y2="8" stroke="#e84" stroke-width="1.5"/><line x1="4" y1="8" x2="8" y2="8" stroke="#e84" stroke-width="1.5"/></svg>
+      <svg width="28" height="18" viewBox="0 0 28 18" fill="none"><rect x="2" y="4" width="22" height="10" rx="1" stroke="#e84" stroke-width="1.5"/><rect x="24" y="7" width="3" height="4" fill="#e84" rx="0.5"/><line x1="7" y1="9" x2="13" y2="9" stroke="#e84" stroke-width="2"/><line x1="10" y1="6" x2="10" y2="12" stroke="#e84" stroke-width="2"/><line x1="16" y1="9" x2="20" y2="9" stroke="#e84" stroke-width="2"/></svg>
+      <svg width="26" height="24" viewBox="0 0 26 24" fill="none"><path d="M13 4v10l-4 4 4 4 4-4-4-4V4z" fill="#e84" opacity="0.3"/><path d="M13 4v10l-4 4 4 4 4-4-4-4" fill="none" stroke="#e84" stroke-width="1.5"/><line x1="9" y1="7" x2="11" y2="7" stroke="#e84" stroke-width="1.5"/><line x1="9" y1="10" x2="11" y2="10" stroke="#e84" stroke-width="1.5"/><path d="M2 18 Q4 14 6 18 Q8 22 10 18" fill="none" stroke="#e84" stroke-width="1.5"/><path d="M16 18 Q18 14 20 18 Q22 22 24 18" fill="none" stroke="#e84" stroke-width="1.5"/></svg>
+      <svg width="26" height="24" viewBox="0 0 26 24" fill="none"><rect x="3" y="8" width="8" height="6" rx="1" stroke="#e84" stroke-width="1.5"/><rect x="11" y="10" width="14" height="2" rx="1" fill="#e84"/><line x1="5" y1="6" x2="5" y2="8" stroke="#e84" stroke-width="2"/><line x1="9" y1="6" x2="9" y2="8" stroke="#e84" stroke-width="2"/><line x1="5" y1="14" x2="5" y2="16" stroke="#e84" stroke-width="2"/><line x1="9" y1="14" x2="9" y2="16" stroke="#e84" stroke-width="2"/><circle cx="3" cy="11" r="2" fill="#e84"/></svg>
+      <svg width="22" height="24" viewBox="0 0 22 24" fill="none"><circle cx="11" cy="5" r="3" stroke="#e84" stroke-width="1.5"/><path d="M5 22V14c0-3 2-5 6-5s6 2 6 5v8" stroke="#e84" stroke-width="1.5" fill="none"/><path d="M11 9 L8 22" stroke="#e84" stroke-width="2" stroke-linecap="round"/><path d="M8 22 L15 22" stroke="#e84" stroke-width="1.5"/></svg>
+      <svg width="24" height="26" viewBox="0 0 24 26" fill="none"><circle cx="12" cy="15" r="9" stroke="#e84" stroke-width="1.5"/><circle cx="12" cy="15" r="5" stroke="#e84" stroke-width="1"/><line x1="12" y1="3" x2="12" y2="6" stroke="#e84" stroke-width="2"/><line x1="9" y1="4" x2="10" y2="7" stroke="#e84" stroke-width="1.5"/><line x1="15" y1="4" x2="14" y2="7" stroke="#e84" stroke-width="1.5"/><text x="9" y="17" fill="#e84" font-size="5" font-family="Orbitron">!</text></svg>
+    </div>
+
+    <div class="info-row">
+      <div><div class="drive-label">DRIVE MODE</div><div class="drive-value">NORMAL - SPORT</div></div>
+      <div class="gear-box"><span class="gear-letter">D</span></div>
+      <div><div class="radio-label">RADIO</div><div class="radio-value">FM 100,5</div></div>
+    </div>
+
+    <!-- MAP VIEW (Hidden by default) -->
+    <div id="mapContainer" class="map-container" style="display:none;">
+      <div id="map" class="map"></div>
+    </div>
+
+    <!-- CONTROL BUTTONS -->
+    <div id="controlsArea" class="controls-area">
+      <div class="status-group">
+        <div id="statusTxt" class="status-label">STANDBY</div>
+        <div id="connStatus" class="connection-status">ESP32: Connecting...</div>
+        <div id="commandStatus" class="status-label">COMMAND: none</div>
+      </div>
+      <div class="ctrl-row">
+        <div class="ctrl-spacer"></div>
+        <button class="ctrl-btn" id="btnFwd" data-dir="FORWARD">
+          <svg viewBox="0 0 18 18" fill="none"><polygon points="9,2 16,14 2,14" fill="#0af"/></svg>
+          FORWARD
+        </button>
+        <div class="ctrl-spacer"></div>
+      </div>
+      <div class="ctrl-row">
+        <button class="ctrl-btn" id="btnLeft" data-dir="LEFT">
+          <svg viewBox="0 0 18 18" fill="none"><polygon points="14,2 14,16 2,9" fill="#0af"/></svg>
+          LEFT
+        </button>
+        <button class="stop-btn" id="btnStop">STOP</button>
+        <button class="ctrl-btn" id="btnRight" data-dir="RIGHT">
+          <svg viewBox="0 0 18 18" fill="none"><polygon points="4,2 4,16 16,9" fill="#0af"/></svg>
+          RIGHT
+        </button>
+      </div>
+      <div class="ctrl-row">
+        <div class="ctrl-spacer"></div>
+        <button class="ctrl-btn" id="btnBwd" data-dir="BACKWARD">
+          <svg viewBox="0 0 18 18" fill="none"><polygon points="9,16 16,4 2,4" fill="#0af"/></svg>
+          BACKWARD
+        </button>
+        <div class="ctrl-spacer"></div>
+      </div>
+    </div>
+
+    <div class="bottom-bar">
+      <div class="gauges-row">
+        <div class="gauge-block">
+          <div class="gauge-labels"><span>0</span><span>FUEL</span><span>1/2</span><span>1</span></div>
+          <div class="gauge-track"><div class="gauge-fill-fuel"></div><div class="gauge-red-end"></div></div>
+        </div>
+        <div class="gauge-divider"></div>
+        <div class="gauge-block">
+          <div class="gauge-labels"><span>0</span><span>TEMP</span><span>50</span><span>100</span></div>
+          <div class="gauge-track"><div class="gauge-fill-temp"></div><div class="gauge-red-end"></div></div>
+        </div>
+      </div>
+      <div class="bottom-info">
+        <span>453km</span><span>21:45</span><span>AM</span><span>58°C</span>
+      </div>
+      <div style="margin-top:10px; color:#0af; text-align:center;">
+  Speed: <span id="speedValReal">0</span> m/s |
+  Distance: <span id="distanceVal">0</span> m |
+  Heading: <span id="headingVal">0</span> |
+  Status: <span id="statusVal">--</span>
+</div>
+    </div>
+  </div>
+
+  <!-- RIGHT RPM GAUGE -->
+  <div class="rpm-wrap">
+  
+
+  <svg>
+    ... your RPM code ...
+  </svg>
+  
+  <div class="rpm-center">
+
+  <img id="imuCar"
+       src="https://cdn-icons-png.flaticon.com/512/744/744465.png"
+       style="position:absolute; right:40px; top:220px; width:60px; z-index:9999;">
+
+</div>
+   
+
+    <svg class="speedo-svg" viewBox="0 0 290 290" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="bgGrad2" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#0a1530"/><stop offset="100%" stop-color="#050a18"/></radialGradient>
+        <radialGradient id="innerGlow2" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#2020a0" stop-opacity="0.8"/><stop offset="60%" stop-color="#100a40" stop-opacity="0.6"/><stop offset="100%" stop-color="#080020" stop-opacity="0.9"/></radialGradient>
+        <filter id="glow2"><feGaussianBlur stdDeviation="3" result="coloredBlur"/><feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        <linearGradient id="needleGrad2" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#e84"/><stop offset="100%" stop-color="#400"/></linearGradient>
+      </defs>
+      <circle cx="145" cy="145" r="140" fill="url(#bgGrad2)" stroke="#0a1830" stroke-width="2"/>
+      <circle cx="145" cy="145" r="138" fill="none" stroke="#0af" stroke-width="3" stroke-opacity="0.9" stroke-dasharray="780 80" stroke-dashoffset="100" filter="url(#glow2)"/>
+      <path d="M 200 18 A 130 130 0 0 1 262 110" fill="none" stroke="#8040ff" stroke-width="18" stroke-opacity="0.5"/>
+      <path d="M 200 18 A 130 130 0 0 1 262 110" fill="none" stroke="#a060ff" stroke-width="6" stroke-opacity="0.8" filter="url(#glow2)"/>
+      <g transform="rotate(-135 145 145)">
+        <line x1="145" y1="18" x2="145" y2="35" stroke="#fff" stroke-width="2.5" transform="rotate(0 145 145)"/>
+        <line x1="145" y1="18" x2="145" y2="35" stroke="#fff" stroke-width="2.5" transform="rotate(33.75 145 145)"/>
+        <line x1="145" y1="18" x2="145" y2="35" stroke="#fff" stroke-width="2.5" transform="rotate(67.5 145 145)"/>
+        <line x1="145" y1="18" x2="145" y2="35" stroke="#fff" stroke-width="2.5" transform="rotate(101.25 145 145)"/>
+        <line x1="145" y1="18" x2="145" y2="35" stroke="#e44" stroke-width="3" transform="rotate(135 145 145)"/>
+        <line x1="145" y1="18" x2="145" y2="35" stroke="#fff" stroke-width="2.5" transform="rotate(168.75 145 145)"/>
+        <line x1="145" y1="18" x2="145" y2="35" stroke="#fff" stroke-width="2.5" transform="rotate(202.5 145 145)"/>
+        <line x1="145" y1="18" x2="145" y2="35" stroke="#fff" stroke-width="2.5" transform="rotate(236.25 145 145)"/>
+        <line x1="145" y1="18" x2="145" y2="35" stroke="#fff" stroke-width="2.5" transform="rotate(270 145 145)"/>
+      </g>
+      <g transform="rotate(-135 145 145)" opacity="0.5">
+        <line x1="145" y1="18" x2="145" y2="26" stroke="#568" stroke-width="1" transform="rotate(16.875 145 145)"/>
+        <line x1="145" y1="18" x2="145" y2="26" stroke="#568" stroke-width="1" transform="rotate(50.625 145 145)"/>
+        <line x1="145" y1="18" x2="145" y2="26" stroke="#568" stroke-width="1" transform="rotate(84.375 145 145)"/>
+        <line x1="145" y1="18" x2="145" y2="26" stroke="#568" stroke-width="1" transform="rotate(118.125 145 145)"/>
+        <line x1="145" y1="18" x2="145" y2="26" stroke="#568" stroke-width="1" transform="rotate(151.875 145 145)"/>
+        <line x1="145" y1="18" x2="145" y2="26" stroke="#568" stroke-width="1" transform="rotate(185.625 145 145)"/>
+        <line x1="145" y1="18" x2="145" y2="26" stroke="#568" stroke-width="1" transform="rotate(219.375 145 145)"/>
+        <line x1="145" y1="18" x2="145" y2="26" stroke="#568" stroke-width="1" transform="rotate(253.125 145 145)"/>
+      </g>
+      <text x="50"  y="218" fill="#cde" font-size="13" font-family="Orbitron" font-weight="600" text-anchor="middle">0</text>
+      <text x="240" y="218" fill="#cde" font-size="13" font-family="Orbitron" font-weight="600" text-anchor="middle">1</text>
+      <text x="262" y="170" fill="#cde" font-size="13" font-family="Orbitron" font-weight="600" text-anchor="middle">2</text>
+      <text x="262" y="110" fill="#cde" font-size="13" font-family="Orbitron" font-weight="600" text-anchor="middle">3</text>
+      <text x="238" y="58"  fill="#e44" font-size="13" font-family="Orbitron" font-weight="700" text-anchor="middle">4</text>
+      <text x="196" y="26"  fill="#cde" font-size="13" font-family="Orbitron" font-weight="600" text-anchor="middle">5</text>
+      <text x="148" y="18"  fill="#cde" font-size="13" font-family="Orbitron" font-weight="600" text-anchor="middle">6</text>
+      <text x="100" y="26"  fill="#cde" font-size="13" font-family="Orbitron" font-weight="600" text-anchor="middle">7</text>
+      <text x="52"  y="58"  fill="#cde" font-size="13" font-family="Orbitron" font-weight="600" text-anchor="middle">8</text>
+      <circle cx="145" cy="145" r="90" fill="url(#innerGlow2)"/>
+      <circle cx="145" cy="145" r="90" fill="none" stroke="#0a2060" stroke-width="2"/>
+      <path d="M 238 60 A 127 127 0 0 1 272 170" fill="none" stroke="#e33" stroke-width="4" opacity="0.7"/>
+      <g class="needle" id="rpmNeedle" transform="rotate(116 145 145)">
+        <line x1="145" y1="55" x2="145" y2="165" stroke="url(#needleGrad2)" stroke-width="3" stroke-linecap="round"/>
+        <circle cx="145" cy="145" r="7" fill="#e84" filter="url(#glow2)"/>
+      </g>
+      <circle cx="145" cy="145" r="4" fill="#fff"/>
+      <text x="145" y="210" fill="#567" font-size="9" font-family="Rajdhani" font-weight="600" text-anchor="middle" letter-spacing="2">RPM</text>
+      <text x="145" y="222" fill="#456" font-size="8" font-family="Rajdhani" font-weight="500" text-anchor="middle" letter-spacing="1">1000x</text>
+    </svg>
+    <div class="rpm-center"><div class="rpm-value" id="rpmVal">3500</div></div>
+    <div class="bottom-right-icons">
+      <svg width="30" height="22" viewBox="0 0 30 22" fill="none"><ellipse cx="8" cy="11" rx="6" ry="7" stroke="#e84" stroke-width="1.5"/><line x1="14" y1="5" x2="26" y2="3" stroke="#e84" stroke-width="1.5" stroke-linecap="round"/><line x1="14" y1="9" x2="28" y2="9" stroke="#e84" stroke-width="1.5" stroke-linecap="round"/><line x1="14" y1="13" x2="28" y2="13" stroke="#e84" stroke-width="1.5" stroke-linecap="round"/><line x1="14" y1="17" x2="26" y2="19" stroke="#e84" stroke-width="1.5" stroke-linecap="round"/></svg>
+      <svg width="22" height="28" viewBox="0 0 22 28" fill="none"><rect x="2" y="10" width="12" height="14" rx="1" stroke="#e84" stroke-width="1.5"/><rect x="4" y="14" width="8" height="6" rx="1" fill="#e84" opacity="0.4"/><line x1="8" y1="10" x2="8" y2="4" stroke="#e84" stroke-width="1.5"/><path d="M8 4 Q14 4 16 8 L18 8 Q20 8 20 12 L20 18 Q20 20 18 20 L16 20" stroke="#e84" stroke-width="1.5" fill="none"/><circle cx="16" cy="21" r="2" fill="#e84"/></svg>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
